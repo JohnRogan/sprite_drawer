@@ -6,7 +6,7 @@ over a photo, and save PNG files ready for Unity.
 Click your computer type below to see the steps.
 
 <details>
-<summary><b>🪟 Windows</b></summary>
+<summary><b>Windows</b></summary>
 
 ### 1. Get the files
 
@@ -40,7 +40,7 @@ Prefer typing? In a terminal opened in this folder, run:
 </details>
 
 <details>
-<summary><b>🍎 macOS</b></summary>
+<summary><b>macOS</b></summary>
 
 ### 1. Get the files
 
