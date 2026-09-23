@@ -4,7 +4,7 @@
 > always-on Cursor rule in `.cursor/rules/knowledge-base.mdc`, read this file
 > before making any code changes and update it afterwards.
 
-Last updated: 2026-09-23 (scripts moved to installation/, .gitignore added)
+Last updated: 2026-09-23 (src_img/ and sprites/ contents gitignored, folders kept)
 
 ## What this is
 
@@ -83,9 +83,16 @@ sprite_drawer/
                  load_reference_image(): multi-format reference loader +
                  sample_pixel(): averaged photo color under a sprite pixel
   dialogs.py     NewSpriteDialog: arbitrary width x height, 1..4096
+  paths.py       Default dialog folders (SPRITES_DIR, SRC_IMG_DIR) resolved
+                 from the package location; sprites_dir()/src_img_dir()
+                 create them on demand
 sprites/                     finished/in-progress sprite PNGs + their
-                             .sprite.json sidecars (keep each pair together)
-src_img/                     reference photos used as underlays
+                             .sprite.json sidecars (keep each pair together).
+                             Folder is tracked via sprites/.gitkeep; its
+                             contents are gitignored (local work only)
+src_img/                     reference photos used as underlays. Same as
+                             sprites/: folder tracked via .gitkeep,
+                             contents gitignored (personal photos)
 ```
 
 ## Key design decisions
@@ -138,6 +145,12 @@ src_img/                     reference photos used as underlays
   keys, plain-letter shortcuts do not fire while typing in a text field
   (the hex input consumes them). Avoid Cmd+H / Cmd+M / Cmd+Q / Cmd+W for
   new shortcuts on macOS.
+- **Dialogs default to repo folders** — sprite Open/Save start in
+  `<repo>/sprites/`, and Load Photo (underlay) starts in `<repo>/src_img/`.
+  Both come from `sprite_drawer/paths.py`, derived from the package location
+  (not the working directory), and are created on demand. Save As for a
+  never-saved sprite proposes `sprites/sprite.png`; once a sprite has a
+  path, Save/Save As use that path instead.
 - **Sidecar underlay paths are absolute**, so moving a sprite PNG + its
   `.sprite.json` together (e.g. into `sprites/`) keeps the underlay restore
   working; moving the photo in `src_img/` would break it.
@@ -247,3 +260,20 @@ pan, Ctrl+R load reference photo, Ctrl+N/O/S/Shift+S file ops.
   than moved, so they are LF on disk and the `.command` files lost the
   execute bit; harmless, since README runs them via `bash` and
   `.gitattributes` makes Git check out `.bat` files as CRLF.
+- 2026-09-23: Open and Save dialogs now start in `<repo>/sprites/`
+  (previously the launch folder, so new sprites landed next to `main.py`).
+  New `SPRITES_DIR` / `sprites_dir()` in `app.py`; CONTROLS.md mentions it.
+  Smoke test gained a check that the folder resolves to the repo's `sprites/`
+  even when run from another working directory.
+- 2026-09-23: Load Photo dialog now starts in `<repo>/src_img/`. Folder
+  helpers moved from `app.py` into new `sprite_drawer/paths.py` (underlay.py
+  can't import app.py without a circular import). `sprites/` contents are now
+  gitignored, with `sprites/.gitkeep` keeping the folder in the repo; the
+  two example sprites already pushed must be untracked with
+  `git rm -r --cached sprites` to leave the repo. Smoke test checks both
+  default folders.
+- 2026-09-23: `src_img/` now matches `sprites/`: contents gitignored,
+  folder kept via `src_img/.gitkeep`, so personal iPhone photos (which may
+  carry GPS EXIF data) stay local. Already-pushed photos need
+  `git rm -r --cached src_img`, and a history rewrite to remove them
+  from older commits.

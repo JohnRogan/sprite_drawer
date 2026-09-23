@@ -10,6 +10,7 @@ from PySide6.QtWidgets import QApplication
 app = QApplication(sys.argv)
 
 from sprite_drawer.app import MainWindow, sidecar_path
+from sprite_drawer.paths import sprites_dir, src_img_dir
 from sprite_drawer.document import SpriteDocument
 from sprite_drawer import tools
 from sprite_drawer.underlay import Underlay
@@ -22,6 +23,18 @@ def check(name, cond):
     if not cond:
         failures.append(name)
 
+
+# --- default dialog folders are <repo>/sprites and <repo>/src_img, any cwd ---
+_repo = os.path.dirname(os.path.abspath(__file__))
+_cwd = os.getcwd()
+os.chdir(tempfile.gettempdir())
+check("default sprite dialog folder is repo sprites/",
+      sprites_dir() == os.path.join(_repo, "sprites")
+      and os.path.isdir(sprites_dir()))
+check("default photo dialog folder is repo src_img/",
+      src_img_dir() == os.path.join(_repo, "src_img")
+      and os.path.isdir(src_img_dir()))
+os.chdir(_cwd)
 
 # --- document: arbitrary dims, undo/redo ---
 doc = SpriteDocument()

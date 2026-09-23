@@ -31,6 +31,8 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from .paths import src_img_dir
+
 
 # Formats offered in the file dialog. Anything QImage reads works natively;
 # HEIC/HEIF goes through Pillow + pillow-heif; PDF renders via QtPdf.
@@ -292,7 +294,7 @@ class UnderlayPanel(QWidget):
 
     def _load(self) -> None:
         path, _ = QFileDialog.getOpenFileName(
-            self, "Load reference photo", "", IMAGE_FILE_FILTER)
+            self, "Load reference photo", src_img_dir(), IMAGE_FILE_FILTER)
         if not path:
             return
         if not self.underlay.load(path):

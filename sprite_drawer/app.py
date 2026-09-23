@@ -28,6 +28,7 @@ from .canvas import BG_MODE_NAMES, PixelCanvas
 from .color_panel import ColorPanel
 from .dialogs import NewSpriteDialog
 from .document import SpriteDocument
+from .paths import sprites_dir
 from .underlay import Underlay, UnderlayPanel
 
 
@@ -300,7 +301,8 @@ class MainWindow(QMainWindow):
         if not self._confirm_discard():
             return
         path, _ = QFileDialog.getOpenFileName(
-            self, "Open sprite", "", "PNG images (*.png);;All files (*)")
+            self, "Open sprite", sprites_dir(),
+            "PNG images (*.png);;All files (*)")
         if not path:
             return
         if not self.doc.load(path):
@@ -326,7 +328,8 @@ class MainWindow(QMainWindow):
 
     def action_save_as(self) -> bool:
         path, _ = QFileDialog.getSaveFileName(
-            self, "Save sprite", self.doc.file_path or "sprite.png",
+            self, "Save sprite",
+            self.doc.file_path or os.path.join(sprites_dir(), "sprite.png"),
             "PNG images (*.png)")
         if not path:
             return False

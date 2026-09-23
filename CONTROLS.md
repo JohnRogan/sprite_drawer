@@ -7,9 +7,11 @@
 1. Click **File → New…** (or press **Ctrl+N**).
 2. Type a **Width** and **Height** in pixels (for example 32 × 32), then click **OK**.
 3. Draw! Left-click paints with your main color; right-click paints with your second color.
-4. Save with **File → Save** (**Ctrl+S**). Sprites save as **PNG** files, ready for Unity.
+4. Save with **File → Save** (**Ctrl+S**). Sprites save as **PNG** files, ready
+   for Unity, into the project's **`sprites`** folder unless you pick another.
 
-To keep working on a sprite later, use **File → Open…** (**Ctrl+O**) and pick its PNG.
+To keep working on a sprite later, use **File → Open…** (**Ctrl+O**) and pick
+its PNG (Open also starts in the `sprites` folder).
 
 ## Add an underlay (trace over a photo)
 
@@ -17,7 +19,9 @@ An underlay is a photo shown *under* your pixels so you can trace it. It is
 never saved into your sprite.
 
 1. In the **Trace Underlay** panel on the right, click **Load Photo…**
-   (or press **Ctrl+R**). iPhone photos (HEIC), JPG, PNG, and PDF all work.
+   (or press **Ctrl+R**). It opens the project's **`src_img`** folder, so
+   putting your photos there saves hunting. iPhone photos (HEIC), JPG, PNG,
+   and PDF all work.
 2. The photo is automatically fitted to your sprite. Adjust it with:
    - **Photo opacity**: how see-through the photo is.
    - **Scale**: make the photo bigger or smaller.
