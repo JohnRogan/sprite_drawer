@@ -1,0 +1,7 @@
+# Python environment (recreated per machine by the installation/ scripts)
+.venv/
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
